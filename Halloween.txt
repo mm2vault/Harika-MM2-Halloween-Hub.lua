@@ -9,12 +9,12 @@ local VirtualUser = game:GetService("VirtualUser")
 local workspace = game:GetService("Workspace")
 local player = Players.LocalPlayer
 
--- Удаляем старый UI
+-- Eski arayüzü temizle
 if player.PlayerGui:FindFirstChild("MM2_UI") then
     player.PlayerGui.MM2_UI:Destroy()
 end
 
--- Стартовые значения
+-- Başlangıç değerleri
 local autoFarmEnabled = false
 local autoResetEnabled = false
 local disableRenderEnabled = false
@@ -34,7 +34,7 @@ frame.BorderSizePixel = 2
 frame.BorderColor3 = Color3.fromRGB(255, 120, 0)
 Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 12)
 
--- Halloween градиент
+-- Halloween renk geçişi
 local gradient = Instance.new("UIGradient", frame)
 gradient.Rotation = 90
 gradient.Color = ColorSequence.new({
@@ -50,7 +50,7 @@ TweenService:Create(frame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.Easing
     Size = UDim2.new(0, 320, 0, 340)
 }):Play()
 
--- 🎃 Тыква вместо солнца
+-- 🎃 Halloween dekoru
 local pumpkin = Instance.new("Frame", frame)
 pumpkin.Size = UDim2.new(0, 42, 0, 42)
 pumpkin.Position = UDim2.new(0.82, 0, 0.04, 0)
@@ -58,7 +58,7 @@ pumpkin.BackgroundColor3 = Color3.fromRGB(255, 120, 0)
 pumpkin.BorderSizePixel = 0
 Instance.new("UICorner", pumpkin).CornerRadius = UDim.new(1, 0)
 
--- Глаза
+-- Gözler
 for i = 1, 2 do
     local eye = Instance.new("Frame", pumpkin)
     eye.Size = UDim2.new(0, 6, 0, 6)
@@ -67,26 +67,36 @@ for i = 1, 2 do
     Instance.new("UICorner", eye).CornerRadius = UDim.new(1, 0)
 end
 
--- Рот
+-- Ağız
 local mouth = Instance.new("Frame", pumpkin)
 mouth.Size = UDim2.new(0.5, 0, 0.2, 0)
 mouth.Position = UDim2.new(0.25, 0, 0.65, 0)
 mouth.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 Instance.new("UICorner", mouth)
 
--- Анимация покачивания
+-- Sallanma animasyonu
 local angle = 0
 RunService.RenderStepped:Connect(function()
     angle += 0.8
     pumpkin.Rotation = math.sin(angle/20) * 8
 end)
 
--- Заголовок
+-- Başlık
+-- Harika MM2 logosu
+local logo = Instance.new("ImageLabel", frame)
+logo.Name = "HarikaLogo"
+logo.Size = UDim2.new(0, 38, 0, 38)
+logo.Position = UDim2.new(0, 8, 0, 2)
+logo.BackgroundTransparency = 1
+logo.Image = "rbxassetid://125355481776626"
+logo.ScaleType = Enum.ScaleType.Fit
+logo.ZIndex = 3
+
 local title = Instance.new("TextLabel", frame)
-title.Size = UDim2.new(1, -50, 0, 42)
-title.Position = UDim2.new(0, 10, 0, 0)
+title.Size = UDim2.new(1, -100, 0, 42)
+title.Position = UDim2.new(0, 52, 0, 0)
 title.BackgroundTransparency = 1
-title.Text = "🎃 HARIKA MM2 | HALLOWEEN HUB 🕷️"
+title.Text = "HARIKA MM2 | HALLOWEEN HUB"
 title.TextColor3 = Color3.fromRGB(255, 180, 50)
 title.Font = Enum.Font.FredokaOne
 title.TextSize = 20
@@ -94,7 +104,7 @@ title.TextXAlignment = Enum.TextXAlignment.Left
 title.TextStrokeTransparency = 0.3
 title.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 
--- Кнопка закрытия
+-- Kapatma düğmesi
 local closeBtn = Instance.new("TextButton", frame)
 closeBtn.Size = UDim2.new(0, 30, 0, 30)
 closeBtn.Position = UDim2.new(1, -35, 0, 6)
@@ -105,7 +115,7 @@ closeBtn.Font = Enum.Font.GothamBold
 closeBtn.TextSize = 16
 Instance.new("UICorner", closeBtn)
 
--- Фон контента
+-- İçerik arka planı
 local contentBg = Instance.new("Frame", frame)
 contentBg.Size = UDim2.new(0.92, 0, 0.76, 0)
 contentBg.Position = UDim2.new(0.04, 0, 0.18, 0)
@@ -118,7 +128,7 @@ content.Size = UDim2.new(1, -10, 1, -10)
 content.Position = UDim2.new(0, 5, 0, 5)
 content.BackgroundTransparency = 1
 
--- Функция создания переключателей
+-- Açma kapama düğmelerini oluştur
 local function createToggle(yPos, labelText, defaultValue, callback)
     local label = Instance.new("TextLabel", content)
     label.Size = UDim2.new(0.7, 0, 0, 30)
@@ -166,7 +176,7 @@ local afkBtn = Instance.new("TextButton", content)
 afkBtn.Size = UDim2.new(0.9, 0, 0, 32)
 afkBtn.Position = UDim2.new(0.05, 0, 0, 110)
 afkBtn.BackgroundColor3 = antiAFKUsed and Color3.fromRGB(70, 160, 70) or Color3.fromRGB(255, 120, 0)
-afkBtn.Text = antiAFKUsed and "Anti-AFK Active" or "Enable Anti-AFK"
+afkBtn.Text = antiAFKUsed and "Anti-AFK Açık" or "Anti-AFK Etkinleştir"
 afkBtn.TextColor3 = Color3.new(1, 1, 1)
 afkBtn.Font = Enum.Font.GothamBold
 afkBtn.TextSize = 15
@@ -175,19 +185,19 @@ Instance.new("UICorner", afkBtn)
 afkBtn.MouseButton1Click:Connect(function()
     if not antiAFKUsed then
         antiAFKUsed = true
-        afkBtn.Text = "🕷️ Anti-AFK Active"
+        afkBtn.Text = "🕷️ Anti-AFK Açık"
         afkBtn.BackgroundColor3 = Color3.fromRGB(70, 160, 70)
         loadstring(game:HttpGet("https://pastebin.com/raw/bwP4bmed"))()
     end
 end)
 
--- Время в игре
+-- Oyunda geçen süre
 local startTime = tick()
 local playTimeLabel = Instance.new("TextLabel", content)
 playTimeLabel.Size = UDim2.new(0.9, 0, 0, 28)
 playTimeLabel.Position = UDim2.new(0.05, 0, 0, 155)
 playTimeLabel.BackgroundTransparency = 1
-playTimeLabel.Text = "⏳ time in game: 0d 0h 0m 0s"
+playTimeLabel.Text = "⏳ Oyunda geçen süre: 0g 0s 0d 0sn"
 playTimeLabel.TextColor3 = Color3.fromRGB(255, 200, 150)
 playTimeLabel.Font = Enum.Font.GothamBold
 playTimeLabel.TextSize = 14
@@ -237,12 +247,12 @@ task.spawn(function()
     while true do
         local delta = math.floor(tick() - startTime)
         local d, h, m, s = math.floor(delta/86400), math.floor(delta%86400/3600), math.floor(delta%3600/60), delta%60
-        playTimeLabel.Text = string.format("⏳ time in game: %dd %02dh %02dm %02ds", d, h, m, s)
+        playTimeLabel.Text = string.format("⏳ Süre: %dg %02ds %02dd %02dsn", d, h, m, s)
         task.wait(1)
     end
 end)
 
--- Перетаскивание UI
+-- Arayüzü sürükleme
 local dragging, dragInput, dragStart, startPos
 local function updateFramePosition(input)
     local delta = input.Position - dragStart
@@ -287,7 +297,7 @@ UserInputService.InputChanged:Connect(function(input)
     end
 end)
 
--- Скрытие/раскрытие
+-- Gizle/göster
 local isHidden = false
 closeBtn.MouseButton1Click:Connect(function()
     isHidden = not isHidden
