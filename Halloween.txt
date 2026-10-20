@@ -26,8 +26,8 @@ gui.Name = "MM2_UI"
 gui.ResetOnSpawn = false
 
 local frame = Instance.new("Frame", gui)
-frame.Size = UDim2.new(0, 320, 0, 260)
-frame.Position = UDim2.new(0.5, -160, 0.5, -130)
+frame.Size = UDim2.new(0, 320, 0, 340)
+frame.Position = UDim2.new(0.5, -160, 0.5, -170)
 frame.BackgroundColor3 = Color3.fromRGB(15, 0, 15)
 frame.BackgroundTransparency = 0.1
 frame.BorderSizePixel = 2
@@ -47,7 +47,7 @@ gradient.Color = ColorSequence.new({
 
 frame.Size = UDim2.new(0, 0, 0, 0)
 TweenService:Create(frame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
-    Size = UDim2.new(0, 320, 0, 260)
+    Size = UDim2.new(0, 320, 0, 340)
 }):Play()
 
 -- 🎃 Тыква вместо солнца
@@ -86,7 +86,7 @@ local title = Instance.new("TextLabel", frame)
 title.Size = UDim2.new(1, -50, 0, 42)
 title.Position = UDim2.new(0, 10, 0, 0)
 title.BackgroundTransparency = 1
-title.Text = "🎃 Murder Mystery 2 | Halloween 🕷️"
+title.Text = "🎃 HARIKA MM2 | HALLOWEEN HUB 🕷️"
 title.TextColor3 = Color3.fromRGB(255, 180, 50)
 title.Font = Enum.Font.FredokaOne
 title.TextSize = 20
@@ -193,6 +193,46 @@ playTimeLabel.Font = Enum.Font.GothamBold
 playTimeLabel.TextSize = 14
 playTimeLabel.TextXAlignment = Enum.TextXAlignment.Left
 
+-- Harika sosyal bağlantıları: düğmeye dokununca bağlantı aşağıdaki kutuda görünür.
+local socialUrlBox = Instance.new("TextBox", content)
+socialUrlBox.Size = UDim2.new(0.94, 0, 0, 24)
+socialUrlBox.Position = UDim2.new(0.03, 0, 0, 218)
+socialUrlBox.BackgroundColor3 = Color3.fromRGB(24, 8, 32)
+socialUrlBox.TextColor3 = Color3.fromRGB(255, 210, 170)
+socialUrlBox.PlaceholderColor3 = Color3.fromRGB(180, 150, 190)
+socialUrlBox.PlaceholderText = "Bağlantıyı görmek için bir düğmeye bas"
+socialUrlBox.Text = ""
+socialUrlBox.TextSize = 11
+socialUrlBox.Font = Enum.Font.Gotham
+socialUrlBox.ClearTextOnFocus = false
+socialUrlBox.TextEditable = false
+socialUrlBox.TextXAlignment = Enum.TextXAlignment.Left
+Instance.new("UICorner", socialUrlBox).CornerRadius = UDim.new(0, 6)
+
+local socialLinks = {
+    { name = "Discord", url = "https://discord.gg/JJmEGx9mN3" },
+    { name = "YouTube", url = "https://youtube.com/@mm2_ultimatehub?si=gNBUraEOXxwsLSxo" },
+    { name = "TikTok", url = "https://www.tiktok.com/@mm2_ultimatehub?_r=1&_t=ZS-99s2nGjSqGn" },
+    { name = "Site", url = "https://harikascript1.ai.studio/" }
+}
+
+for i, item in ipairs(socialLinks) do
+    local button = Instance.new("TextButton", content)
+    button.Size = UDim2.new(0.22, 0, 0, 26)
+    button.Position = UDim2.new(0.03 + (i - 1) * 0.24, 0, 0, 186)
+    button.BackgroundColor3 = i % 2 == 0 and Color3.fromRGB(105, 35, 145) or Color3.fromRGB(210, 95, 25)
+    button.Text = item.name
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.TextSize = 11
+    button.Font = Enum.Font.GothamBold
+    button.AutoButtonColor = true
+    Instance.new("UICorner", button).CornerRadius = UDim.new(0, 7)
+
+    button.Activated:Connect(function()
+        socialUrlBox.Text = item.url
+    end)
+end
+
 task.spawn(function()
     while true do
         local delta = math.floor(tick() - startTime)
@@ -251,7 +291,7 @@ end)
 local isHidden = false
 closeBtn.MouseButton1Click:Connect(function()
     isHidden = not isHidden
-    local newSize = isHidden and UDim2.new(0, 320, 0, 42) or UDim2.new(0, 320, 0, 260)
+    local newSize = isHidden and UDim2.new(0, 320, 0, 42) or UDim2.new(0, 320, 0, 340)
     TweenService:Create(frame, TweenInfo.new(0.3), { Size = newSize }):Play()
     contentBg.Visible = not isHidden
     pumpkin.Visible = not isHidden
