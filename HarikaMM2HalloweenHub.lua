@@ -314,6 +314,8 @@ end)
 local minimized = false
 connect(minimizeButton.Activated, function()
     minimized = not minimized
+    minimizeButton.Position = minimized and UDim2.new(1, -126, 0, 19) or UDim2.new(0.5, 5, 0, 277)
+    minimizeButton.Size = minimized and UDim2.fromOffset(110, 34) or UDim2.new(0.5, -19, 0, 34)
     statusCard.Visible = not minimized
     countCard.Visible = not minimized
     targetsCard.Visible = not minimized
@@ -426,8 +428,6 @@ connect(farmButton.Activated, function()
         state.lastMove = 0
     else
         stopFarm("FARM STOPPED")
-        local _, humanoid = getCharacterParts()
-        if humanoid then humanoid:MoveTo((select(3, getCharacterParts()) or Vector3.zero).Position) end
     end
 end)
 
