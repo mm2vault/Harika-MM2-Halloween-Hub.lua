@@ -362,8 +362,22 @@ local function isAvailable(obj)
     if obj:GetAttribute("Collected") == true or not obj.CanTouch then return false end
     local visual = obj:FindFirstChild("CoinVisual")
     if visual and visual:GetAttribute("Collected") == true then return false end
-    if obj.Transparency >= 1 and (not visual or not visual:IsA("BasePart") or visual.Transparency >= 1) then
-        return false
+    if obj.Transparency >= 0.99 then
+        local hasVisibleVisual = false
+        if visual then
+            if visual:IsA("BasePart") and visual.Transparency < 0.99 then
+                hasVisibleVisual = true
+            else
+                for _, child in ipairs(visual:GetDescendants()) do
+                    if child:IsA("BasePart") and child.Transparency < 0.99
+                        and child.LocalTransparencyModifier < 0.99 then
+                        hasVisibleVisual = true
+                        break
+                    end
+                end
+            end
+        end
+        if not hasVisibleVisual then return false end
     end
     return true
 end
